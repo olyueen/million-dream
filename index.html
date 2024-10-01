@@ -1,0 +1,81 @@
+<!doctype html> <!-- 定義HTML文檔的類型為HTML5 -->
+<html>
+    <head>
+        <!-- 引入A-Frame庫，用於構建WebVR和WebAR應用 -->
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+        <!-- 引入AR.js庫，支持A-Frame中的AR功能 -->
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+        <!-- 引入A-Frame Extras擴展，支持加載GLTF模型 -->
+        <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+
+        <!-- 引入手勢檢測工具，支持手勢交互 -->
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
+
+        <!-- 引入手勢處理工具，實現手勢交互操作 -->
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+    </head>
+
+    <body style="margin: 0; overflow: hidden;"> <!-- 設置頁面無邊距，並禁用滾動條 -->
+        <a-scene
+            vr-mode-ui="enabled: false;" <!-- 禁用VR模式的UI -->
+            loading-screen="enabled: false;" <!-- 禁用加載屏幕 -->
+            renderer="logarithmicDepthBuffer: true;" <!-- 啟用對數深度緩衝區以防止深度問題 -->
+            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" <!-- 設置AR.js屬性，使用網絡攝像頭進行最佳跟踪 -->
+            id="scene" <!-- 設置場景ID -->
+            embedded <!-- 設置場景為嵌入模式 -->
+            gesture-detector <!-- 啟用手勢檢測 -->
+        >
+            <a-assets> <!-- 定義資產容器 -->
+                <a-asset-item
+                    id="animated-asset" <!-- 定義資產ID -->
+                    src="assets/asset.glb" <!-- 加載GLTF模型 -->
+                ></a-asset-item>
+            </a-assets>
+
+            <a-marker
+                id="animated-marker" <!-- 定義AR標記的ID -->
+                type="pattern" <!-- 設置標記類型為圖案 -->
+                preset="custom" <!-- 使用自定義圖案標記 -->
+                url="assets/marker.patt" <!-- 指定標記圖案文件的URL -->
+                raycaster="objects: .clickable" <!-- 啟用射線檢測，目標為class="clickable"的對象 -->
+                emitevents="true" <!-- 啟用事件發送 -->
+                cursor="fuse: false; rayOrigin: mouse;" <!-- 設置游標，使用鼠標作為射線源，不啟用融合 -->
+                id="markerA" <!-- 冗餘的ID定義，應與前面的ID合併 -->
+            >
+                <a-entity
+                    id="bowser-model" <!-- 設置3D模型的ID -->
+                    scale="0.9829724494421218 0.9829724494421218 0.9829724494421218" <!-- 調整3D模型的縮放比例 -->
+                    animation-mixer="loop: repeat" <!-- 啟用動畫循環播放 -->
+                    gltf-model="#animated-asset" <!-- 指定要使用的3D模型資產 -->
+                    class="clickable" <!-- 設置該元素為可點擊目標 -->
+                    gesture-handler <!-- 啟用手勢處理 -->
+                ></a-entity>
+            </a-marker>
+            <a-marker
+                id="animated-maker" <!-- 定義AR標記的ID -->
+                type="pattern" <!-- 設置標記類型為圖案 -->
+                preset="custom" <!-- 使用自定義圖案標記 -->
+                url="pattern-reach.patt" <!-- 指定標記圖案文件的URL -->
+                raycaster="objects: .clickable" <!-- 啟用射線檢測，目標為class="clickable"的對象 -->
+                emitevents="true" <!-- 啟用事件發送 -->
+                cursor="fuse: false; rayOrigin: mouse;" <!-- 設置游標，使用鼠標作為射線源，不啟用融合 -->
+                id="markerA" <!-- 冗餘的ID定義，應與前面的ID合併 -->
+            >
+                <a-entity
+                    id="bowser-model" <!-- 設置3D模型的ID -->
+                    scale="0.9829724494421218 0.9829724494421218 0.9829724494421218" <!-- 調整3D模型的縮放比例 -->
+                    animation-mixer="loop: repeat" <!-- 啟用動畫循環播放 -->
+                    rotation="0 0 0"
+                    gltf-model="#animated-asset" <!-- 指定要使用的3D模型資產 -->
+                    class="clickable" <!-- 設置該元素為可點擊目標 -->
+                    gesture-handler <!-- 啟用手勢處理 -->
+                ></a-entity>
+            </a-marker>
+
+
+            <a-entity camera></a-entity> <!-- 定義攝像機 -->
+        </a-scene>
+    </body>
+</html>
